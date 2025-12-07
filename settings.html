@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Guacamole Wrapper</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="settings-body">
+    <div class="settings-container">
+        <header class="settings-header">
+            <h1>⚙️ Settings</h1>
+            <p>Configure your Guacamole Wrapper preferences</p>
+        </header>
+
+        <form id="settings-form" class="settings-form">
+            <!-- Target URL -->
+            <div class="setting-group">
+                <label for="target-url" class="setting-label">
+                    <span class="label-text">Target URL</span>
+                    <span class="label-description">Guacamole server address</span>
+                </label>
+                <input type="text" id="target-url" name="targetUrl" class="setting-input"
+                    placeholder="https://github.com/Saarthaksr7/Guacamole-rapper" required>
+            </div>
+
+            <!-- Hardware Acceleration -->
+            <div class="setting-group">
+                <label for="hardware-acceleration" class="setting-label">
+                    <span class="label-text">Hardware Acceleration</span>
+                    <span class="label-description">Enable GPU rendering (requires restart)</span>
+                </label>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="hardware-acceleration" name="hardwareAcceleration">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <!-- Network Priority -->
+            <div class="setting-group">
+                <label for="network-priority" class="setting-label">
+                    <span class="label-text">Network Priority (High Performance)</span>
+                    <span class="label-description">Prevent throttling when minimized</span>
+                </label>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="network-priority" name="networkPriority">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <!-- Repository Link -->
+            <div class="setting-group">
+                <label class="setting-label">
+                    <span class="label-text">Repository</span>
+                    <span class="label-description">View source code and documentation</span>
+                </label>
+                <a href="#" id="repo-link" class="repo-link">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path
+                            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+                    </svg>
+                    Visit Repository
+                </a>
+            </div>
+
+            <!-- Restart Warning (hidden by default) -->
+            <div id="restart-warning" class="restart-warning hidden">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                        d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+                        clip-rule="evenodd" />
+                </svg>
+                <span>Hardware acceleration change requires restart</span>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="button-group">
+                <button type="button" id="cancel-btn" class="btn btn-secondary">Cancel</button>
+                <button type="submit" class="btn btn-primary">Save Settings</button>
+            </div>
+
+            <!-- Restart Button (hidden by default) -->
+            <div id="restart-section" class="restart-section hidden">
+                <button type="button" id="restart-btn" class="btn btn-restart">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <path fill-rule="evenodd"
+                            d="M8 3a5 5 0 104.546 2.914.5.5 0 00-.908-.417A4 4 0 118 4a.5.5 0 000-1zM8 2a6 6 0 100 12A6 6 0 008 2z" />
+                        <path
+                            d="M8 4.466V.534a.25.25 0 01.41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 018 4.466z" />
+                    </svg>
+                    Restart Now
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script src="settings.js"></script>
+</body>
+
+</html>

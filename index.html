@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' http: https: ws: wss: data: blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline';">
+  <title>Guacamole Wrapper</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #1a1a1a;
+    }
+    
+    #loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #1a1a1a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      color: #ffffff;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    }
+    
+    #loader.hidden {
+      display: none;
+    }
+    
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid #333;
+      border-top-color: #4CAF50;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 20px;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    #loader p {
+      font-size: 16px;
+      color: #888;
+    }
+    
+    #guacamole-frame {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background-color: #1a1a1a;
+    }
+  </style>
+</head>
+<body>
+  <div id="loader">
+    <div class="spinner"></div>
+    <p>Loading Guacamole...</p>
+  </div>
+  
+  <webview id="guacamole-frame" src="" allowpopups></webview>
+  
+  <script>
+    // Get the current URL from settings and load it
+    const loadGuacamole = async () => {
+      try {
+        const settings = await window.electronAPI.getSettings();
+        const webview = document.getElementById('guacamole-frame');
+        const loader = document.getElementById('loader');
+        
+        webview.src = settings.targetUrl;
+        
+        // Hide loader once content starts loading
+        webview.addEventListener('did-start-loading', () => {
+          // Keep loader visible
+        });
+        
+        // Hide loader once content is loaded
+        webview.addEventListener('did-finish-load', () => {
+          setTimeout(() => {
+            loader.classList.add('hidden');
+          }, 500);
+        });
+        
+        // Handle load errors
+        webview.addEventListener('did-fail-load', (event) => {
+          if (event.errorCode !== -3) { // -3 is ERR_ABORTED, which is normal
+            loader.innerHTML = `
+              <div class="spinner" style="border-top-color: #f44336;"></div>
+              <p style="color: #f44336;">Failed to load Guacamole</p>
+              <p style="margin-top: 10px; font-size: 14px;">Error: ${event.errorDescription}</p>
+              <p style="margin-top: 5px; font-size: 14px;">URL: ${settings.targetUrl}</p>
+              <p style="margin-top: 15px; font-size: 13px; color: #666;">Check your settings and ensure the Guacamole server is running.</p>
+            `;
+          }
+        });
+      } catch (error) {
+        console.error('Failed to load settings:', error);
+      }
+    };
+    
+    loadGuacamole();
+  </script>
+</body>
+</html>
